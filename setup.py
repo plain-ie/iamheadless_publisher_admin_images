@@ -23,7 +23,7 @@ setup(
     url="#",
 
     #
-    # license="LICENSE.txt",
+    license="LICENSE",
     description="#",
 
     # long_description=open("README.txt").read(),
