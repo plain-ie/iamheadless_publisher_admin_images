@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from iamheadless_publisher_admin.pydantic_models import BaseItemPydanticModel, BaseItemDataPydanticModel, BaseItemContentsPydanticModel
-from iamheadless_file_handling import utils as iamheadless_file_handling_utils, get_file_name
+from iamheadless_file_handling import utils as iamheadless_file_handling_utils
 
 from .conf import settings
 from . import forms
@@ -45,6 +45,24 @@ class ImagePydanticModel(BaseItemPydanticModel):
         _contents = _data.get('data', {}).get('contents', [])
         _display_content = ImagePydanticModel.get_display_content(_contents, self._primary_language)
         return _display_content['title']
+
+    @property
+    def EDIT_URL(self):
+
+        _data = self.DATA
+
+        project_id = _data.get('project', None)
+        tenant_id = _data.get('tenant', None)
+        item_id = _data.get('id', None)
+
+        return reverse(
+            settings.URLNAME_RETRIEVE_UPDATE_ITEM,
+            kwargs={
+                'project_id': project_id,
+                'tenant_id': tenant_id,
+                'item_id': item_id
+            }
+        )
 
     @property
     def FILE_NAME(self):
@@ -127,7 +145,7 @@ class ImagePydanticModel(BaseItemPydanticModel):
             file_index = file_index.replace(f'-file', '')
             file_index = int(file_index)
             try:
-                validated_data['data']['contents'][file_index]['file_name'] = get_file_name(tenant_id, file[1].name)
+                validated_data['data']['contents'][file_index]['file_name'] = iamheadless_file_handling_utils.get_file_name(tenant_id, file[1].name)
             except IndexError:
                 pass
         return validated_data
