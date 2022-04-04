@@ -71,6 +71,16 @@ class ImagePydanticModel(BaseItemPydanticModel):
         _display_content = ImagePydanticModel.get_display_content(_contents, self._primary_language)
         return _display_content['file_name']
 
+    #
+
+    @classmethod
+    def viewsets(cls):
+        return [
+            f'{settings.APP_NAME}.viewsets.ImageCreateViewSet',
+            f'{settings.APP_NAME}.viewsets.ImageDeleteViewSet',
+            f'{settings.APP_NAME}.viewsets.ImageRetrieveUpdateViewSet',
+        ]
+
     @classmethod
     def get_item_type(cls, data):
         return data['item_type']
