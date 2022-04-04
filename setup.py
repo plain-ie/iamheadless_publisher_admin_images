@@ -30,7 +30,8 @@ setup(
 
     # Dependent packages (distributions)
     install_requires=[
-        "django>=4.0.2",
+        # 'https://github.com/plain-ie/iamheadless_file_handling/archive/refs/heads/main.zip',
+        # 'https://github.com/plain-ie/iamheadless_publisher_admin/archive/refs/heads/main.zip',
     ],
 
 )
